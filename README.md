@@ -11,4 +11,3 @@ Novidades:
 - Ganhos por partida reajustados para ajudar a evoluir o clube.
 
 O progresso fica salvo no armazenamento local do navegador.
-\n\nVersão 2.2: estádio visual dinâmico por nível, iluminação/arquibancadas progressivas, animações de partida e correções de validação do progresso salvo.\n
