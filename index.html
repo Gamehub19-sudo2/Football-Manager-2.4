@@ -30,23 +30,30 @@ button{font:inherit;font-weight:750;border:0;border-radius:10px;padding:11px 12p
 .notice{font-size:12px;color:#66758b;margin-top:10px}.full{grid-column:1/-1}
 @media(max-width:740px){main{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.full{grid-column:auto}.panel{padding:12px}}
 
-/* Estádio dinâmico: arquibancadas, refletores e torcida reagem ao nível e à partida. */
-.stadium-scene{position:relative;padding:18px 12px 12px;border-radius:16px;background:linear-gradient(#182b48,#243b5b);overflow:hidden;transition:background .5s,box-shadow .5s}
-.stadium-scene:before,.stadium-scene:after{content:"";position:absolute;top:5px;width:9px;height:22px;background:#dcecff;border-radius:3px;box-shadow:0 0 14px 4px #e8f4ff99;opacity:.25;transition:opacity .4s}
-.stadium-scene:before{left:7%}.stadium-scene:after{right:7%}
-.stadium-scene.lit:before,.stadium-scene.lit:after{opacity:1}
-.stands{display:flex;justify-content:space-around;gap:3px;padding:3px 5px 7px;margin-bottom:7px;border-radius:8px;background:repeating-linear-gradient(90deg,#263c60 0 8px,#38577f 8px 12px);min-height:18px;overflow:hidden}
-.fan-dot{font-size:10px;line-height:12px;display:inline-block;animation:fanWave 1.4s ease-in-out infinite alternate;animation-delay:calc(var(--i)*-0.08s);filter:saturate(.8)}
-@keyframes fanWave{from{transform:translateY(1px)}to{transform:translateY(-3px)}}
-.pitch{box-shadow:0 0 0 3px #b4c9e2,0 5px 14px #0005;transition:filter .5s,box-shadow .5s}
-.pitch.big-game{filter:saturate(1.18) brightness(1.06);box-shadow:0 0 0 5px #d5b35a,0 0 22px #ffdf7c66}
-.player{transition:left .7s ease,top .7s ease,transform .2s}
-.ball{transition:left .45s ease,top .45s ease}
-.pitch.in-match .ball{animation:ballPulse .5s ease-in-out infinite alternate}
-@keyframes ballPulse{to{box-shadow:0 0 12px 4px #fff9;transform:translate(-50%,-50%) scale(1.15)}}
-@media(prefers-reduced-motion:reduce){.fan-dot,.pitch.in-match .ball{animation:none}.player,.ball{transition:none}}
 
-</style>
+.stadium-shell{--stadium-color:#26364b;position:relative;padding:25px 12px 12px;background:linear-gradient(145deg,#17263b,#35475d 45%,#17263b);border:3px solid #101d30;border-radius:15px;box-shadow:inset 0 0 0 3px #ffffff14,0 8px 20px #10233f24;overflow:hidden;transition:background .5s,box-shadow .5s}
+.stadium-shell:before,.stadium-shell:after{content:"";position:absolute;z-index:0;left:0;right:0;height:18px;background:repeating-linear-gradient(90deg,#e7edf5 0 4px,#64748b 4px 7px,#d6e0ee 7px 10px);opacity:.8}
+.stadium-shell:before{top:0}.stadium-shell:after{bottom:0}
+.stadium-lights{position:absolute;top:5px;left:8%;right:8%;display:flex;justify-content:space-between;color:#fff8b5;text-shadow:0 0 9px #fff,0 0 18px #fff;font-size:15px;z-index:2}
+.stand{height:18px;margin:0 -2px;background:repeating-linear-gradient(90deg,#e8edf5 0 2px,#e8edf5 2px 4px,#34465c 4px 6px,#26364b 6px 8px);border:1px solid #9aa8ba;position:relative;overflow:hidden;transition:height .35s,filter .35s}
+.stand-top{margin-bottom:5px}.stand-bottom{margin-top:5px}
+.crowd-seats{position:absolute;inset:0;background:repeating-linear-gradient(90deg,#ffcb45 0 2px,#e74747 2px 4px,#f8fafc 4px 6px,#155eef 6px 8px,#18864b 8px 10px);opacity:.72}
+.pitch{z-index:1;box-shadow:0 0 0 3px #dce6f1,0 0 14px #0006;transition:filter .4s,box-shadow .4s}
+.stadium-caption{text-align:center;color:#f8fafc;font-size:11px;font-weight:800;letter-spacing:.3px;margin-top:6px}
+.stadium-shell[data-level="1"]{filter:saturate(.8)}
+.stadium-shell[data-level="2"],.stadium-shell[data-level="3"]{background:linear-gradient(145deg,#243b37,#43634e,#243b37)}
+.stadium-shell[data-level="4"],.stadium-shell[data-level="5"],.stadium-shell[data-level="6"]{background:linear-gradient(145deg,#172c4d,#32618a,#172c4d);box-shadow:inset 0 0 0 3px #ffffff20,0 8px 25px #155eef33}
+.stadium-shell[data-level="7"],.stadium-shell[data-level="8"],.stadium-shell[data-level="9"],.stadium-shell[data-level="10"]{background:linear-gradient(145deg,#382c18,#8b6a2e,#302511);box-shadow:inset 0 0 0 3px #ffcb4540,0 8px 30px #ffcb4530}
+.stadium-shell[data-level="11"]{background:linear-gradient(135deg,#10233f,#155eef,#7c3aed,#10233f);box-shadow:0 0 24px #8b5cf6aa,inset 0 0 0 3px #ffcb45}
+.stadium-shell[data-level="11"] .stand{height:27px;filter:brightness(1.25)}
+.stadium-shell[data-level="11"] .stadium-lights{font-size:20px}
+.stadium-shell.match-live .pitch{filter:brightness(1.12) saturate(1.15)}
+.player{transition:left .45s ease,top .45s ease,filter .2s}
+.ball{transition:left .35s ease,top .35s ease}
+@keyframes goalFlash{0%,100%{box-shadow:0 0 0 #ffcb45}50%{box-shadow:0 0 24px #ffcb45}}
+.stadium-shell.goal-flash{animation:goalFlash .7s ease 2}
+@media(max-width:420px){.stadium-shell{padding:22px 7px 9px}.stand{height:13px}.stadium-caption{font-size:10px}}
+\n</style>
 </head>
 <body>
 <header><div class="wrap">
@@ -60,11 +67,14 @@ button{font:inherit;font-weight:750;border:0;border-radius:10px;padding:11px 12p
 <main>
 <section class="panel">
 <h2>🏟️ Seu estádio</h2><div class="notice" style="margin:0 0 8px">Visualização do campo inteiro • Estádio evolui até o nível 100</div>
-<div class="stadium-scene" id="stadiumScene"><div class="stands" id="standsTop" aria-label="Torcida na arquibancada"></div><div class="pitch" id="pitch" aria-label="Campo de futebol visto de cima">
+<div class="stadium-shell" id="stadiumShell" data-level="1" aria-label="Visual do estádio">
+<div class="stadium-lights" aria-hidden="true"><span>✦</span><span>✦</span><span>✦</span><span>✦</span></div>
+<div class="stand stand-top" aria-hidden="true"><span class="crowd-seats"></span></div>
+<div class="pitch" id="pitch" aria-label="Campo de futebol visto de cima">
 <div class="midline"></div><div class="circle"></div><div class="boxarea leftarea"></div><div class="boxarea rightarea"></div><div class="goal left"></div><div class="goal right"></div>
 <div class="player home" style="left:22%;top:50%" title="Goleiro titular">G</div><div class="player home" style="left:35%;top:30%" title="Craque do time">10<span class="playerName">Craque</span></div><div class="player home" style="left:35%;top:70%">7<span class="playerName">Ponta</span></div><div class="player home" style="left:48%;top:42%">9<span class="playerName">Atacante</span></div><div class="player home" style="left:48%;top:60%">8<span class="playerName">Meia</span></div>
 <div class="player away" style="left:78%;top:50%">GOL</div><div class="player away" style="left:66%;top:30%">4</div><div class="player away" style="left:66%;top:70%">5</div><div class="player away" style="left:57%;top:43%">9</div><div class="player away" style="left:57%;top:60%">8</div><div class="ball" id="ball"></div>
-</div><div class="stands" id="standsBottom" aria-label="Torcida na arquibancada"></div></div>
+</div>
 <div class="scoreline"><span class="tag" id="league">LIGA AMADORA</span><span class="score" id="score">0 × 0</span><span class="tag" id="matchno">JOGO 1</span></div>
 <div class="actions"><button class="primary" id="matchBtn" onclick="playMatch()">▶ Disputar partida</button><button class="secondary" onclick="train()">💪 Treinar</button></div>
 <div class="item" style="margin-top:8px"><div class="iteminfo"><strong>Quantidade de treinos</strong><small>Escolha de 1 a 5 treinos por vez. O preço aumenta a cada treino.</small></div><select id="trainCount" aria-label="Quantidade de treinos" style="max-width:90px;padding:8px;border:1px solid #d5deea;border-radius:8px;font:inherit"><option value="1">1 vez</option><option value="2">2 vezes</option><option value="3">3 vezes</option><option value="4">4 vezes</option><option value="5">5 vezes</option></select></div>
@@ -88,7 +98,7 @@ button{font:inherit;font-weight:750;border:0;border-radius:10px;padding:11px 12p
 </main>
 <script>
 const defaultState=()=>({money:500,fans:0,cups:0,power:10,match:1,wins:0,losses:0,draws:0,stadium:1,players:[],playerLevels:{},trainCount:0,teamName:"Meu Clube",careerLeague:"🇧🇷 Brasileirão Série A",careerClub:"Flamengo",difficulty:"medium",unlocked:[],lastScore:"0 × 0",lastLog:"Seu clube está pronto! Dispute uma partida para ganhar dinheiro e fama. Treine para aumentar a força do time."});
-let s=(()=>{try{let old=JSON.parse(localStorage.getItem('construaClubeSave')||'{}');return {...defaultState(),...old, money:Math.max(0,Number(old.money??500)||0), fans:Math.max(0,Number(old.fans)||0), cups:Math.max(0,Number(old.cups)||0), power:Math.max(1,Number(old.power)||10), match:Math.max(1,Number(old.match)||1), stadium:Math.max(1,Math.min(100,Math.floor(Number(old.stadium)||1))), players:Array.isArray(old.players)?old.players.filter(i=>Number.isInteger(i)&&i>=0&&i<25):[], playerLevels:old.playerLevels&&typeof old.playerLevels==='object'?old.playerLevels:{}, trainCount:Math.max(0,Number(old.trainCount)||0),teamName:old.teamName||'Meu Clube',careerLeague:old.careerLeague||'🇧🇷 Brasileirão Série A',careerClub:old.careerClub||'Flamengo',difficulty:['easy','medium','hard'].includes(old.difficulty)?old.difficulty:'medium'}}catch(e){return defaultState()}})();
+let s=(()=>{try{let old=JSON.parse(localStorage.getItem('construaClubeSave')||'{}');let state={...defaultState(),...old};state.money=Number.isFinite(Number(state.money))?Math.max(0,Number(state.money)):500;state.fans=Number.isFinite(Number(state.fans))?Math.max(0,Number(state.fans)):0;state.cups=Math.max(0,Number(state.cups)||0);state.power=Math.max(1,Number(state.power)||10);state.match=Math.max(1,Math.floor(Number(state.match)||1));state.stadium=Math.max(1,Math.min(100,Math.floor(Number(state.stadium)||1)));state.players=Array.isArray(state.players)?[...new Set(state.players.filter(i=>Number.isInteger(i)&&i>=0&&i<25))]:[];state.playerLevels=state.playerLevels&&typeof state.playerLevels==='object'?state.playerLevels:{};state.trainCount=Math.max(0,Number(state.trainCount)||0);state.teamName=String(state.teamName||'Meu Clube').slice(0,28);state.difficulty=['easy','medium','hard'].includes(state.difficulty)?state.difficulty:'medium';state.unlocked=Array.isArray(state.unlocked)?state.unlocked:[];return state}catch(e){return defaultState()}})();
 const players=[
 {name:"Goleiro promissor",emoji:"🧤",price:2500000,power:4,desc:"Defende chutes difíceis."},
 {name:"Atacante veloz",emoji:"⚡",price:5000000,power:6,desc:"Mais chances de marcar gols."},
@@ -112,22 +122,12 @@ const stadiumCosts=[0,5000,15000,35000,70000,120000,200000,350000,600000,1000000
 const upgrades=Array.from({length:100},(_,i)=>({name:i<stadiumNames.length?stadiumNames[i]:`Estádio nível ${i+1}`,cost:i===0?0:(stadiumCosts[i]??Math.round(1000000*Math.pow(1.075,i-9)))}));
 
 function fmt(n){return 'R$ '+Math.floor(n).toLocaleString('pt-BR')}
-function renderStats(){document.getElementById('clubTitle').textContent='⚽ '+(s.teamName||'Meu Clube');document.getElementById('money').textContent=fmt(s.money);document.getElementById('fans').textContent=s.fans.toLocaleString('pt-BR');document.getElementById('cups').textContent=s.cups;document.getElementById('power').textContent=s.power;document.getElementById('score').textContent=s.lastScore;document.getElementById('matchno').textContent='JOGO '+s.match;document.getElementById('league').textContent=s.cups>=5?'LIGA DOS CAMPEÕES':s.cups>=2?'LIGA NACIONAL':'LIGA AMADORA';document.getElementById('matchLog').textContent=s.lastLog;s.stadium=Math.max(1,Math.min(upgrades.length,Number(s.stadium)||1));document.getElementById('stadiumLabel').textContent='Estádio: '+upgrades[s.stadium-1].name;document.getElementById('stadiumLevel').textContent='Nível '+s.stadium+'/'+upgrades.length;document.getElementById('stadiumProgress').style.width=(s.stadium/upgrades.length*100)+'%';document.getElementById('matchBtn').disabled=false;renderStadium()}
-
-function renderStadium(){
- const level=Math.max(1,Math.min(100,Number(s.stadium)||1));
- const scene=document.getElementById('stadiumScene'),pitch=document.getElementById('pitch');
- if(!scene||!pitch)return;
- scene.classList.toggle('lit',level>=4);pitch.classList.toggle('big-game',level>=10||s.cups>0);
- scene.style.background=level<3?'linear-gradient(#1a2d49,#263a50)':level<10?'linear-gradient(#102849,#405a78)':'linear-gradient(#081b37,#294d72)';
- const fanCount=Math.min(42,8+Math.floor(level*.34)+Math.floor(Math.min(s.fans,5000)/500));
- ['standsTop','standsBottom'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=Array.from({length:fanCount},(_,i)=>`<span class="fan-dot" style="--i:${i}">${(i%5===0)?'🟡':(i%3===0?'⚪':'🔵')}</span>`).join('')});
-}
-
+function renderStadium(){const shell=document.getElementById('stadiumShell');if(!shell)return;const level=Math.max(1,Math.min(100,Number(s.stadium)||1));shell.dataset.level=String(level<=1?1:level<=3?3:level<=6?6:level<=10?10:11);const caption=document.getElementById('stadiumCaption');if(caption)caption.textContent='🏟️ '+upgrades[level-1].name+' • Nível '+level+'/100 • '+(level<10?'Obras e arquibancadas em expansão':level<50?'Arena em crescimento':'Arena de elite');const seats=shell.querySelectorAll('.crowd-seats');seats.forEach(el=>el.style.opacity=String(Math.min(.95,.35+level/140)));const lights=shell.querySelector('.stadium-lights');if(lights)lights.style.opacity=String(Math.min(1,.35+level/120))}
+function renderStats(){renderStadium();document.getElementById('clubTitle').textContent='⚽ '+(s.teamName||'Meu Clube');document.getElementById('money').textContent=fmt(s.money);document.getElementById('fans').textContent=s.fans.toLocaleString('pt-BR');document.getElementById('cups').textContent=s.cups;document.getElementById('power').textContent=s.power;document.getElementById('score').textContent=s.lastScore;document.getElementById('matchno').textContent='JOGO '+s.match;document.getElementById('league').textContent=s.cups>=5?'LIGA DOS CAMPEÕES':s.cups>=2?'LIGA NACIONAL':'LIGA AMADORA';document.getElementById('matchLog').textContent=s.lastLog;document.getElementById('stadiumLabel').textContent='Estádio: '+upgrades[s.stadium-1].name;document.getElementById('stadiumLevel').textContent='Nível '+s.stadium+'/'+upgrades.length;document.getElementById('stadiumProgress').style.width=(s.stadium/upgrades.length*100)+'%';document.getElementById('matchBtn').disabled=false}
 let currentTab='squad';
 function showTab(tab){currentTab=tab;['squad','shop','trophy'].forEach(t=>document.getElementById('tab'+t[0].toUpperCase()+t.slice(1)).classList.toggle('active',t===tab));renderContent()}
 function renderContent(){let c=document.getElementById('content');
-if(currentTab==='squad'){c.innerHTML=`<h2>Seu elenco (${5+s.players.length} jogadores)</h2><div class="item"><div class="emoji">🧤</div><div class="iteminfo"><strong>Goleiro titular</strong><small>Defesa básica • contratado</small></div><span class="tag">+2</span></div><div class="item"><div class="emoji">⚽</div><div class="iteminfo"><strong>Atacante da base</strong><small>Jovem promessa • contratado</small></div><span class="tag">+2</span></div>`+s.players.map(i=>`<div class="item"><div class="emoji">${players[i].emoji}</div><div class="iteminfo"><strong>${players[i].name}</strong><small>${players[i].desc}</small></div><span class="tag">+${players[i].power}</span></div>`).join('')+`<p class="notice">Força total: ${s.power}. Treine e contrate novos jogadores para ficar mais forte.</p>`}
+if(currentTab==='squad'){c.innerHTML=`<h2>Seu elenco (${5+s.players.length} jogadores)</h2><div class="item"><div class="emoji">🧤</div><div class="iteminfo"><strong>Goleiro titular</strong><small>Defesa básica • contratado</small></div><span class="tag">+2</span></div><div class="item"><div class="emoji">⚽</div><div class="iteminfo"><strong>Atacante da base</strong><small>Jovem promessa • contratado</small></div><span class="tag">+2</span></div>`+s.players.map(i=>`<div class="item"><div class="emoji">${(players[i]||{emoji:'⚽'}).emoji}</div><div class="iteminfo"><strong>${(players[i]||{name:'Jogador'}).name}</strong><small>${(players[i]||{desc:'Jogador do elenco'}).desc}</small></div><span class="tag">+${(players[i]||{power:0}).power}</span></div>`).join('')+`<p class="notice">Força total: ${s.power}. Treine e contrate novos jogadores para ficar mais forte.</p>`}
 if(currentTab==='shop'){c.innerHTML='<h2>Mercado de jogadores e estrelas</h2><p class="notice">Os preços são extremamente altos: os jogadores comuns custam dezenas ou centenas de milhares, e as estrelas mundiais custam centenas de milhões. Jogadores podem ser melhorados até o nível 5; o estádio tem 100 níveis com preços crescentes.</p>'+players.map((p,i)=>{let owned=s.players.includes(i),level=owned?(s.playerLevels[i]||1):0,price=owned?Math.round(p.price*(0.55+level*0.55)):p.price;return `<div class="item"><div class="emoji">${p.emoji}</div><div class="iteminfo"><strong>${p.name}</strong><small>${p.desc}</small><small>${owned?'Nível '+level+'/5 • próximo aumento de força +'+p.power:'Força inicial +'+p.power}</small><small><b>${fmt(price)}</b></small></div><button class="${owned?'secondary':'primary'}" ${(owned&&level>=5)||s.money<price?'disabled':''} onclick="${owned?`upgradePlayer(${i})`:`buyPlayer(${i})`}">${!owned?'Contratar':level>=5?'Nível máximo':'Melhorar'}</button></div>`}).join('')}
 if(currentTab==='trophy'){let goals=[['Primeira vitória','Vença uma partida',s.wins>=1],['Torcida crescendo','Chegue a 100 fãs',s.fans>=100],['Elenco reforçado','Contrate 3 jogadores',s.players.length>=3],['Casa cheia','Melhore o estádio até o nível 3',s.stadium>=3],['Primeiro troféu','Jogue 100 partidas e ganhe um troféu',s.cups>=1],['Treino pesado','Faça 10 treinos',s.trainCount>=10],['Clube milionário','Tenha R$ 5.000 guardados',s.money>=5000],['Time de estrelas','Melhore um jogador até o nível 5',Object.values(s.playerLevels).some(v=>v>=5)],['Lenda do bairro','Vença 25 partidas',s.wins>=25],['Centenário','Dispute 100 partidas',s.match>100]];c.innerHTML='<h2>Conquistas (10)</h2>'+goals.map(g=>`<div class="item"><div class="emoji">${g[2]?'🏆':'🔒'}</div><div class="iteminfo"><strong>${g[0]}</strong><small>${g[1]}</small></div><span class="tag">${g[2]?'DESBLOQUEADA':'BLOQUEADA'}</span></div>`).join('')}
 }
@@ -176,7 +176,9 @@ s.lastLog=`Derrota por ${homeGoals} a ${awayGoals}. Mesmo assim, você recebeu $
 if(matchNumber>0&&matchNumber%10===0){const bonus=1000+matchNumber*25;s.money+=bonus;s.lastLog+=` 🎁 Bônus de temporada: +${fmt(bonus)}!`;}
 if(matchNumber>0&&matchNumber%25===0){s.cups++;const bonus=2500;s.money+=bonus;s.lastLog+=` 🏆 Troféu conquistado! Bônus extra de ${fmt(bonus)}!`;}
 if(s.fans>=100&&!s.unlocked.includes('fans'))s.unlocked.push('fans');
-const pitch=document.getElementById('pitch');pitch.classList.add('in-match');const ball=document.getElementById('ball');ball.style.left=(12+Math.random()*76)+'%';ball.style.top=(15+Math.random()*70)+'%';document.querySelectorAll('.player.home,.player.away').forEach(p=>{if(!p.dataset.baseLeft){p.dataset.baseLeft=parseFloat(p.style.left);p.dataset.baseTop=parseFloat(p.style.top)}p.style.left=Math.max(8,Math.min(92,(Number(p.dataset.baseLeft)+((Math.random()-.5)*12))))+'%';p.style.top=Math.max(12,Math.min(88,(Number(p.dataset.baseTop)+((Math.random()-.5)*16))))+'%'});setTimeout(()=>pitch.classList.remove('in-match'),1800);update()}
+document.getElementById('ball').style.left=(35+Math.random()*30)+'%';
+document.getElementById('ball').style.top=(25+Math.random()*50)+'%';
+update()}
 function saveGame(show=true){try{localStorage.setItem('construaClubeSave',JSON.stringify(s));if(show){s.lastLog='Progresso salvo neste dispositivo!';document.getElementById('matchLog').textContent=s.lastLog}}catch(e){if(show)alert('Não foi possível salvar neste navegador.')}
 }
 function resetGame(){if(confirm('Tem certeza que deseja reiniciar o clube? Todo o progresso salvo será apagado.')){s=defaultState();try{localStorage.removeItem('construaClubeSave')}catch(e){}showTab('squad');update()}}
@@ -191,11 +193,11 @@ function setDifficulty(v){s.difficulty=v;s.lastLog='Dificuldade definida: '+({ea
 let crowdOn=false,audioCtx=null,crowdTimer=null;
 function toggleCrowd(){crowdOn=!crowdOn;document.getElementById('crowdStatus').textContent='Som da torcida: '+(crowdOn?'ligado':'desligado');document.getElementById('crowdBtn').textContent=crowdOn?'Desligar torcida':'Ativar torcida';if(crowdOn){try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();playCrowd()}catch(e){crowdOn=false;document.getElementById('crowdStatus').textContent='Som indisponível neste navegador'}}else if(crowdTimer)clearTimeout(crowdTimer)}
 function playCrowd(){if(!crowdOn||!audioCtx)return;for(let i=0;i<5;i++){let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sawtooth';o.frequency.value=90+Math.random()*180;g.gain.setValueAtTime(.0001,audioCtx.currentTime);g.gain.linearRampToValueAtTime(.025,audioCtx.currentTime+.05);g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+.35);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+.35)}crowdTimer=setTimeout(playCrowd,600+Math.random()*800)}
-function renderLeaderboard(kind='money',btn){let rows=[];try{rows=JSON.parse(localStorage.getItem('fmLocalLeaderboard')||'[]');if(!Array.isArray(rows))rows=[]}catch(e){}let entry={name:s.teamName||'Meu Clube',money:s.money,fame:s.fans,cups:s.cups};rows=rows.filter(r=>r.name!==entry.name);rows.push(entry);rows.sort((a,b)=>b[kind]-a[kind]);rows=rows.slice(0,10);try{localStorage.setItem('fmLocalLeaderboard',JSON.stringify(rows))}catch(e){}let labels={money:'Dinheiro',fame:'Fama',cups:'Títulos'};let el=document.getElementById('leaderboard');el.dataset.kind=kind;el.innerHTML=rows.map((r,i)=>`<div class="item"><div class="emoji">${['🥇','🥈','🥉'][i]||'⚽'}</div><div class="iteminfo"><strong>${i+1}. ${escapeHtml(r.name)}</strong><small>${labels[kind]}: ${kind==='money'?fmt(r[kind]):Number(r[kind]).toLocaleString('pt-BR')}</small></div></div>`).join('');document.getElementById('rankUpdated').textContent='Atualizado: '+new Date().toLocaleTimeString('pt-BR');if(btn){document.querySelectorAll('.tabs .tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active')}}
+function renderLeaderboard(kind='money',btn){let rows=[];try{rows=JSON.parse(localStorage.getItem('fmLocalLeaderboard')||'[]')}catch(e){}let entry={name:s.teamName||'Meu Clube',money:s.money,fame:s.fans,cups:s.cups};rows=rows.filter(r=>r.name!==entry.name);rows.push(entry);rows.sort((a,b)=>b[kind]-a[kind]);rows=rows.slice(0,10);try{localStorage.setItem('fmLocalLeaderboard',JSON.stringify(rows))}catch(e){}let labels={money:'Dinheiro',fame:'Fama',cups:'Títulos'};let el=document.getElementById('leaderboard');el.dataset.kind=kind;el.innerHTML=rows.map((r,i)=>`<div class="item"><div class="emoji">${['🥇','🥈','🥉'][i]||'⚽'}</div><div class="iteminfo"><strong>${i+1}. ${escapeHtml(r.name)}</strong><small>${labels[kind]}: ${kind==='money'?fmt(r[kind]):Number(r[kind]).toLocaleString('pt-BR')}</small></div></div>`).join('');document.getElementById('rankUpdated').textContent='Atualizado: '+new Date().toLocaleTimeString('pt-BR');if(btn){document.querySelectorAll('.tabs .tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active')}}
 function escapeHtml(str){return String(str).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 setInterval(()=>renderLeaderboard(document.getElementById('leaderboard')?.dataset.kind||'money'),300000);
 
-showTab('squad');renderStats();renderContent();renderLeagues();const cs=document.getElementById('careerLeague');cs.innerHTML=Object.keys(careerData).map(l=>`<option>${l}</option>`).join('');cs.value=s.careerLeague in careerData?s.careerLeague:Object.keys(careerData)[0];renderClubChoices();if((careerData[cs.value]||[]).includes(s.careerClub))document.getElementById('careerClub').value=s.careerClub;const diffEl=document.getElementById('difficulty');if(diffEl)diffEl.value=s.difficulty;renderLeaderboard('money');renderStadium();
+showTab('squad');renderStats();renderContent();renderLeagues();const cs=document.getElementById('careerLeague');cs.innerHTML=Object.keys(careerData).map(l=>`<option>${l}</option>`).join('');cs.value=s.careerLeague in careerData?s.careerLeague:Object.keys(careerData)[0];renderClubChoices();if((careerData[cs.value]||[]).includes(s.careerClub))document.getElementById('careerClub').value=s.careerClub;renderLeaderboard('money');
 </script>
 </body>
 </html>
